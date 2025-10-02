@@ -47,15 +47,22 @@ body{
 .card {
   border: none !important;
   margin-bottom: 2rem;
+  border-radius: 1rem;
 }
-.card-img-top{
-  border-radius: 1rem !important;
+
+.card-img-top {
+  border-radius: 1rem 1rem 0 0 !important;
   width: 100% !important;
+  height: 200px; /* fixed height for consistent card size */
   object-fit: cover !important;
 }
-.card-body{
-  padding: 0 !important; 
+
+.card-body {
+  padding: 0.75rem !important; 
 }
-.card-text p{
-  font-weight: 400 !important; ;
+
+.card-text {
+  font-weight: 400 !important;
+  margin: 0;
 }
+
