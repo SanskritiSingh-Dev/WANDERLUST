@@ -6,6 +6,11 @@ const Listing = require("./models/listing");
 const path = require("path");
 const ejs = require("ejs");
 const methodOverride = require("method-override");
+const ejsMate = require("ejs-mate");
+
+// Setting up EJS as the templating engine with ejs-mate for layouts
+app.engine("ejs", ejsMate);
+
 // Middleware to override methods for PUT and DELETE requests
 app.use(methodOverride("_method"));
 
