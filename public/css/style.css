@@ -1,6 +1,14 @@
 /*body*/
 body{
   font-family: "Plus Jakarta Sans", sans-serif !important;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: transparent !important;
+}
+
+.container{
+  flex: 1;
 }
 
 
@@ -67,4 +75,25 @@ body{
 }
 .row a{
   text-decoration: none !important ;
+}
+
+/*card effects */
+.card-img-overlay{
+  opacity: 0;
+  text-align: right;
+}
+
+.card-img-overlay:hover {
+  opacity: 0.2;
+  background-color: white;
+}
+
+/*button for add listing page*/
+.add-btn {
+  background-color: #7a3535 !important;
+  border: none !important;
+  padding: 0.5rem 1.5rem !important;;
+}
+.add-btn:hover {
+  opacity: 0.9 !important;
 }
