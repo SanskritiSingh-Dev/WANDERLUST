@@ -1,18 +1,66 @@
 <% layout('layouts/boilerplate') -%>
-  <body>
-    <h3>Listing details</h3>
-    <ul>
-      <li><%= listing.title %></li>
-      <li><%= listing.description %></li>
-      <li>&#8377; <%= listing.price.toLocaleString("en-IN") %></li>
-      <li><%= listing.location %></li>
-      <li><%= listing.country %></li>
-    </ul>
-    <br />
-    <a href="/listings/<%= listing._id %>/edit">Edit </a>
-    <br /><br />
-    <form action="/listings/<%= listing._id %>?_method=DELETE" method="post">
-      <button>Delete</button>
-    </form>
-  </body>
 
+<!-- =========================
+     Listing Details Page
+     Displays full details of a single listing
+========================= -->
+
+<div class="row">
+  
+  <!-- Page Title -->
+  <div class="col-8 offset-2 mt-3 mb-3">
+    <h3>Listing details</h3>
+  </div>
+
+  <!-- Listing Card -->
+  <div class="card col-6 offset-3 show-card">
+    <!-- Listing Image -->
+    <img 
+      src="<%= listing.image %>" 
+      class="card-img-top show-img" 
+      alt="listing image"
+    >
+
+    <!-- Card Content -->
+    <div class="card-body">
+      <p class="card-text">
+        <!-- Listing Title -->
+        <b><%= listing.title %></b><br>
+
+        <!-- Listing Description -->
+        <%= listing.description %><br>
+
+        <!-- Listing Price -->
+        &#8377; <%= listing.price.toLocaleString("en-IN") %><br>
+
+        <!-- Listing Location -->
+        <%= listing.location %><br>
+
+        <!-- Listing Country -->
+        <%= listing.country %>
+      </p>
+    </div>
+  </div>
+
+  <!-- Buttons Section -->
+  <!-- Displays Edit and Delete buttons side by side -->
+  <div class="d-flex justify-content-center align-items-center gap-3 mt-4 mb-5">
+    <!-- Edit Button -->
+    <a 
+      href="/listings/<%= listing._id %>/edit" 
+      class="btn btn-dark add-btn px-4"
+    >
+      Edit
+    </a>
+
+    <!-- Delete Button -->
+    <form 
+      action="/listings/<%= listing._id %>?_method=DELETE" 
+      method="post"
+    >
+      <button class="btn btn-dark px-4" type="submit">
+        Delete
+      </button>
+    </form>
+  </div>
+</div>
