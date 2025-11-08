@@ -3,25 +3,48 @@
   <div class="col-8 offset-2">
     <br />
     <h3>Edit the Listing</h3>
-    <form method="post" action="/listings/<%= listing._id %>?_method=PUT">
+    <form
+      method="post"
+      action="/listings/<%= listing._id %>?_method=PUT"
+      class="needs-validation"
+      novalidate
+    >
       <div class="mb-3">
         <label for="title" class="form-label">Title</label>
-        <input 
+        <input
           id="title"
-          name="listing[title]" 
-          type="text" 
+          name="listing[title]"
+          type="text"
           value="<%= listing.title %>"
-          class="form-control" />
+          class="form-control"
+          required
+        />
+        <div class="valid-feedback">Great title!</div>
+        <div class="invalid-feedback">Oops! title required.</div>
       </div>
 
       <div class="mb-3">
         <label for="description" class="form-label">Description</label>
-        <textarea id="description" name="listing[description]" class="form-control"><%= listing.description %></textarea> 
+        <textarea
+          id="description"
+          name="listing[description]"
+          class="form-control"
+          required
+        ><%= listing.description %></textarea>
+        <div class="valid-feedback">Nice description!</div>
+        <div class="invalid-feedback">Description is required.</div>
       </div>
 
       <div class="mb-3">
         <label for="image" class="form-label">Image</label>
-        <input id="image" name="listing[image]" type="text" value="<%= listing.image %>" class="form-control" />
+        <input
+          id="image"
+          name="listing[image]"
+          type="text"
+          value="<%= listing.image %>"
+          class="form-control"
+          required
+        />
       </div>
 
       <div class="row">
@@ -33,7 +56,10 @@
             type="number"
             value="<%= listing.price %>"
             class="form-control"
+            required
           />
+          <div class="invalid-feedback">Oops! price per night required.</div>
+          <div class="valid-feedback">Great price!</div>
         </div>
 
         <div class="mb-3 col-md-8">
@@ -44,7 +70,10 @@
             type="text"
             value="<%= listing.country %>"
             class="form-control"
+            required
           />
+          <div class="invalid-feedback">Oops! country required.</div>
+          <div class="valid-feedback">Awesome country!</div>
         </div>
       </div>
 
@@ -55,11 +84,35 @@
           name="listing[location]"
           type="text"
           value="<%= listing.location %>"
-          class="form-control"/>
+          class="form-control"
+          required
+        />
+        <div class="invalid-feedback">Oops! location required.</div>
+        <div class="valid-feedback">Beautiful location!</div>
       </div>
 
       <button class="btn btn-dark add-btn mt-3">Edit</button>
-      <br><br>
+      <br /><br />
     </form>
   </div>
 </div>
+
+<script>
+  (() => {
+    'use strict';
+    const forms = document.querySelectorAll('.needs-validation');
+    Array.from(forms).forEach(form => {
+      form.addEventListener(
+        'submit',
+        event => {
+          if (!form.checkValidity()) {
+            event.preventDefault();
+            event.stopPropagation();
+          }
+          form.classList.add('was-validated');
+        },
+        false
+      );
+    });
+  })();
+</script>

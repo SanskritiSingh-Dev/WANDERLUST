@@ -13,60 +13,60 @@
           <div class="invalid-feedback">
             oops! title required.
           </div>
+        </div>
+        <div class="mb-3">
+          <label for="description" class="form-label">Description</label>
+          <textarea name="listing[description]" placeholder="Add a beautiful description" class="form-control"
+            required></textarea>
+          <div class="valid-feedback">
+            Nice description!
+          </div>
+          <div class="invalid-feedback">
+            description is required.
+          </div>
+        </div>
 
-          <div class="mb-3">
-            <label for="description" class="form-label">Description</label>
-            <textarea name="listing[description]" placeholder="Add a beautiful description" class="form-control"
-              required></textarea>
-            <div class="valid-feedback">
-              Nice description!
-            </div>
+        <div class="mb-3">
+          <label for="image" class="form-label">Image</label>
+          <input name="listing[image]" type="text" placeholder="Image URL/Link" class="form-control" />
+        </div>
+
+        <div class="row">
+          <div class="mb-3 col-4">
+            <label for="price" class="form-label">Price</label>
+            <input name="listing[price]" type="number" placeholder="Price per night" class="form-control" required />
             <div class="invalid-feedback">
-              description is required.
-            </div>
-          </div>
-
-          <div class="mb-3">
-            <label for="image" class="form-label">Image</label>
-            <input name="listing[image]" type="text" placeholder="Image URL/Link" class="form-control" />
-          </div>
-
-          <div class="row">
-            <div class="mb-3 col-4">
-              <label for="price" class="form-label">Price</label>
-              <input name="listing[price]" type="number" placeholder="Price per night" class="form-control" required />
-              <div class="invalid-feedback">
-                oops! price per night required.
-              </div>
-              <div class="valid-feedback">
-                Great price!
-              </div>
-            </div>
-
-            <div class="mb-3 col-md-8">
-              <label for="country" class="form-label">Country</label>
-              <input name="listing[country]" type="text" placeholder="Country" class="form-control" required />
-              <div class="invalid-feedback">
-                oops! country required.
-              </div>
-              <div class="valid-feedback">
-                Awesome country!
-              </div>
-            </div>
-          </div>
-
-          <div class="mb-3">
-            <label for="location" class="form-label">Location</label>
-            <input name="listing[location]" type="text" placeholder="Location" class="form-control" required />
-            <div class="invalid-feedback">
-              oops! location required.
+              oops! price per night required.
             </div>
             <div class="valid-feedback">
-              Beautiful location!
+              Great price!
             </div>
           </div>
-          <button class="btn btn-dark add-btn mt-3">Add</button>
-          <br><br>
+
+          <div class="mb-3 col-md-8">
+            <label for="country" class="form-label">Country</label>
+            <input name="listing[country]" type="text" placeholder="Country" class="form-control" required />
+            <div class="invalid-feedback">
+              oops! country required.
+            </div>
+            <div class="valid-feedback">
+              Awesome country!
+            </div>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="location" class="form-label">Location</label>
+          <input name="listing[location]" type="text" placeholder="Location" class="form-control" required />
+          <div class="invalid-feedback">
+            oops! location required.
+          </div>
+          <div class="valid-feedback">
+            Beautiful location!
+          </div>
+        </div>
+        <button class="btn btn-dark add-btn mt-3">Add</button>
+        <br><br>
       </form>
     </div>
   </div>
