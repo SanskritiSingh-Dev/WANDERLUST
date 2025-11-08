@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const review = require("./review");
 const Schema = mongoose.Schema;
 
 // Define the Listing schema
@@ -11,6 +12,13 @@ const listingSchema = new Schema({
   price: { type: Number, required: true },
   location: { type: String, required: true },
   country: { type: String, required: true },
+  // Array of references to Review documents
+  reviews: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Review",
+    },
+  ],
 });
 // Create and export the Listing model
 const Listing = mongoose.model("Listing", listingSchema);
