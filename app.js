@@ -50,6 +50,17 @@ app.get("/", (req, res) => {
   res.send("Hi I am root");
 });
 
+// Middleware function to validate listing data using Joi schema
+const validateListing = (req, res, next) => {
+  let { error } = listingSchema.validate(req.body); // validate the request body against the listing schema
+  if (error) {
+    let errmsg = error.details.map((el) => el.message).join(","); // create an error message from the validation errors
+    throw new ExpressError(errmsg, 400); // if validation fails, throw an error
+  } else {
+    next(); // if validation passes, proceed to the next middleware/route handler
+  }
+};
+
 //to get all the listings from the database and render them using EJS
 //Index route
 app.get(
@@ -81,12 +92,8 @@ app.get(
 //Create Route
 app.post(
   "/listings",
+  validateListing,
   wrapAsync(async (req, res, next) => {
-    let result = listingSchema.validate(req.body); // validating the request body against the listing schema
-    console.log(result);
-    if (result.error) {
-      throw new ExpressError(result.error, 400); // if validation fails, throw an error
-    }
     const newListing = new Listing(req.body.listing); // creating a new listing using the data from the request body
     await newListing.save();
     res.redirect("/listings");
@@ -108,10 +115,8 @@ app.get(
 //Update Route
 app.put(
   "/listings/:id",
+  validateListing,
   wrapAsync(async (req, res) => {
-    if (!req.body.listing) {
-      throw new ExpressError("Invalid Listing Data", 400);
-    }
     const { id } = req.params;
     const listing = await Listing.findByIdAndUpdate(id, {
       ...req.body.listing,
