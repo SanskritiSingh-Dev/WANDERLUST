@@ -9,6 +9,7 @@ const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate");
 const wrapAsync = require("./utils/wrapAsync.js");
 const ExpressError = require("./utils/ExpressError.js");
+const Joi = require('joi');
 
 // Setting up EJS as the templating engine with ejs-mate for layouts
 app.engine("ejs", ejsMate);
@@ -85,6 +86,25 @@ app.post(
       throw new ExpressError("Invalid Listing Data", 400);
     }
     const newListing = new Listing(req.body.listing); // creating a new listing using the data from the request body
+
+    // Validating required fields
+    //this is not the best way to do validation but for simplicity, we are doing it this way
+    // if(!newListing.title){
+    //   throw new ExpressError("Title is required", 400);
+    // }
+    // if(!newListing.description){
+    //   throw new ExpressError("Description is required", 400);
+    // }
+    // if(!newListing.price){
+    //   throw new ExpressError("Price is required", 400);
+    // }
+    // if(!newListing.location){
+    //   throw new ExpressError("Location is required", 400);
+    // }
+    // if(!newListing.country){
+    //   throw new ExpressError("Country is required", 400);
+    // }
+
     await newListing.save();
     res.redirect("/listings");
   })
