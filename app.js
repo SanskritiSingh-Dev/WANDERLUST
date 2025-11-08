@@ -154,9 +154,8 @@ app.use((req, res, next) => {
 // Error-handling middleware
 app.use((err, req, res, next) => {
   let { statusCode = 500, message = "Something went wrong!" } = err; // destructuring statusCode and message from the error object
-  res.status(statusCode).send(message); // sending the error message with the appropriate status code
+  res.status(statusCode).render("error.ejs", { message }); // rendering the error page with the error object
 });
-
 // Connect to server
 app.listen(8080, () => {
   console.log("Server is running on port 8080");
