@@ -10,6 +10,8 @@ const ejsMate = require("ejs-mate");
 const wrapAsync = require("./utils/wrapAsync.js");
 const ExpressError = require("./utils/ExpressError.js");
 const { listingSchema } = require("./schema.js"); // Importing the listing schema for validation
+const Review = require("./models/review.js");
+
 
 // Setting up EJS as the templating engine with ejs-mate for layouts
 app.engine("ejs", ejsMate);
@@ -134,6 +136,20 @@ app.delete(
     let deletedListing = await Listing.findByIdAndDelete(id); //deleting the listing by id
     console.log(deletedListing); //logging the deleted listing to the console
     res.redirect("/listings"); //redirecting to the listings page after deletion
+  })
+);
+
+//Review routes would go here
+//Post route to create a new review for a listing
+app.post(
+  "/listings/:id/reviews",
+  wrapAsync(async (req, res) => { 
+    let listing = await Listing.findById(req.params.id); //finding the listing by id
+    let newReview = new Review(req.body.review); //creating a new review using the data from the request body
+    listing.reviews.push(newReview); //adding the new review to the listing's reviews array
+    await newReview.save(); //saving the new review to the database
+    await listing.save(); //saving the updated listing to the database
+    res.redirect(`/listings/${listing._id}`); //redirecting to the listing's show page
   })
 );
 

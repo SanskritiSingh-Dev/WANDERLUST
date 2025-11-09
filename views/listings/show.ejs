@@ -64,7 +64,7 @@
   <div class="col-8 offset-3 mb-3">
     <hr>
     <h4>Leave a Review</h4>
-    <form action="">
+    <form action="/listings/<%= listing._id %>/reviews" method="POST" class="needs-validation" novalidate>
       <!-- Rating Input -->
       <div class="mb-3 mt-3">
         <label for="rating" class="form-label">Rating</label>
@@ -73,7 +73,13 @@
       <!-- Comment Input -->
       <div class="mb-3 mt-3">
         <label for="comment" class="form-lable">Comment</label>
-        <textarea id="comment" name="review[comment]" rows="4" cols="50" class="form-control"></textarea>
+        <textarea id="comment" name="review[comment]" rows="4" cols="50" class="form-control" required></textarea>
+        <div class="invalid-feedback">
+          Please provide a comment.
+        </div>
+        <div class="valid-feedback">
+          Looks good!
+        </div>
       </div>
       <!-- Submit Button -->
       <div>
