@@ -11,6 +11,7 @@ const wrapAsync = require("./utils/wrapAsync.js");
 const ExpressError = require("./utils/ExpressError.js");
 const { listingSchema } = require("./schema.js"); // Importing the listing schema for validation
 const Review = require("./models/review.js");
+const { reviewSchema } = require("./schema.js"); // Importing the review schema for validation
 
 
 // Setting up EJS as the templating engine with ejs-mate for layouts
@@ -57,6 +58,17 @@ const validateListing = (req, res, next) => {
   let { error } = listingSchema.validate(req.body); // validate the request body against the listing schema
   if (error) {
     let errmsg = error.details.map((el) => el.message).join(","); // create an error message from the validation errors
+    throw new ExpressError(errmsg, 400); // if validation fails, throw an error
+  } else {
+    next(); // if validation passes, proceed to the next middleware/route handler
+  }
+};
+
+//validate review middleware
+const validateReview = (req, res, next) => {
+  let { error } = reviewSchema.validate(req.body); // validate the request body against the review schema
+  if (error) {
+    let errmsg = error.details.map((el) => el.message).join(","); // create an error message from the validation errors   
     throw new ExpressError(errmsg, 400); // if validation fails, throw an error
   } else {
     next(); // if validation passes, proceed to the next middleware/route handler
@@ -143,6 +155,7 @@ app.delete(
 //Post route to create a new review for a listing
 app.post(
   "/listings/:id/reviews",
+  validateReview,
   wrapAsync(async (req, res) => { 
     let listing = await Listing.findById(req.params.id); //finding the listing by id
     let newReview = new Review(req.body.review); //creating a new review using the data from the request body
