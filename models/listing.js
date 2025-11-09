@@ -20,6 +20,17 @@ const listingSchema = new Schema({
     },
   ],
 });
+
+// Middleware to delete associated reviews when a listing is deleted
+listingSchema.post("findOneAndDelete", async (listing) => { // middleware function triggered after a listing is deleted
+  if (listing) {
+    await review.deleteMany({ // deleting all reviews associated with the deleted listing
+      _id: {
+        $in: listing.reviews, // using the $in operator to match all review IDs in the listing's reviews array
+      },
+    });
+  }
+});
 // Create and export the Listing model
 const Listing = mongoose.model("Listing", listingSchema);
 module.exports = Listing;
