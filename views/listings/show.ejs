@@ -60,4 +60,25 @@
       </button>
     </form>
   </div>
+
+  <div class="col-8 offset-3 mb-3">
+    <hr>
+    <h4>Leave a Review</h4>
+    <form action="">
+      <!-- Rating Input -->
+      <div class="mb-3 mt-3">
+        <label for="rating" class="form-label">Rating</label>
+        <input type="range" min="1" max="5" id="rating" name="review[rating]" class="form-range">
+      </div>
+      <!-- Comment Input -->
+      <div class="mb-3 mt-3">
+        <label for="comment" class="form-lable">Comment</label>
+        <textarea id="comment" name="review[comment]" rows="4" cols="50" class="form-control"></textarea>
+      </div>
+      <!-- Submit Button -->
+      <div>
+        <button class="btn btn-outline-dark" type="submit">Submit Review</button>
+      </div>
+    </form>
+  </div>
 </div>
