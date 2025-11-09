@@ -166,6 +166,17 @@ app.post(
   })
 );
 
+//Delete route to delete a review from a listing
+app.delete(
+  "/listings/:id/reviews/:reviewId",
+  wrapAsync(async (req, res) => { 
+    let { id, reviewId } = req.params; //destructuring id and reviewId from req.params
+    await Listing.findByIdAndUpdate(id, { $pull: { reviews: reviewId } }); //removing the reviewId from the listing's reviews array
+    await Review.findByIdAndDelete(reviewId); //deleting the review by reviewId
+    res.redirect(`/listings/${id}`); //redirecting to the listing's show page
+  }
+));
+
 // Test route to create a sample listing
 // app.get("/testListings", async(req, res) => {
 //   let sampleListing = new Listing({
