@@ -23,5 +23,5 @@ module.exports.reviewSchema = Joi.object({ // Define the schema for a review
     review: Joi.object({ // The review object
         comment: Joi.string().required(), // Comment is a required string
         rating: Joi.number().required().min(1).max(5) // Rating is a required number between 1 and 5
-    }).required()
+    }).required(),
 });

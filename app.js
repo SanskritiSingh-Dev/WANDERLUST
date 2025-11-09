@@ -97,7 +97,7 @@ app.get(
   "/listings/:id",
   wrapAsync(async (req, res) => {
     const { id } = req.params; // destructuring id from req.params
-    const listing = await Listing.findById(id);
+    const listing = await Listing.findById(id).populate("reviews"); // fetching the listing by id and populating the reviews
     res.render("listings/show.ejs", { listing });
   })
 );
