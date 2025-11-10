@@ -28,7 +28,10 @@
     <%- include("../includes/navbar.ejs") %>
 
     <!-- Page Content -->
-    <div class="container"><%- body %></div>
+    <div class="container">
+      <%- include("../includes/flash.ejs") %>
+      <%- body %>
+    </div>
 
     <%- include("../includes/footer.ejs") %>
     <script

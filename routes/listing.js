@@ -45,6 +45,10 @@ router.get(
   wrapAsync(async (req, res) => {
     const { id } = req.params; // destructuring id from req.params
     const listing = await Listing.findById(id).populate("reviews"); // fetching the listing by id and populating the reviews
+    if(!listing){
+      req.flash("error", "Cannot find that listing!");  // flash message if listing not found
+      return res.redirect("/listings"); // redirecting to listings page if listing not found
+    }
     res.render("listings/show.ejs", { listing });
   })
 );
@@ -57,6 +61,7 @@ router.post(
   wrapAsync(async (req, res, next) => {
     const newListing = new Listing(req.body.listing); // creating a new listing using the data from the request body
     await newListing.save();
+    req.flash("success", "Successfully made a new listing!"); // flash message for successful creation
     res.redirect("/listings");
   })
 );
@@ -68,6 +73,10 @@ router.get(
   wrapAsync(async (req, res) => {
     const { id } = req.params; //destructuring id from req.params
     const listing = await Listing.findById(id);
+    if(!listing){
+      req.flash("error", "Cannot find that listing!");  // flash message if listing not found
+      return res.redirect("/listings"); // redirecting to listings page if listing not found
+    }
     res.render("listings/edit.ejs", { listing });
   })
 );
@@ -82,6 +91,7 @@ router.put(
     const listing = await Listing.findByIdAndUpdate(id, {
       ...req.body.listing,
     }); //updating the listing by id with the new data from the request body
+    req.flash("success", "Successfully updated the listing!"); // flash message for successful update
     res.redirect("/listings");
   })
 );
@@ -94,6 +104,7 @@ router.delete(
     const { id } = req.params;
     let deletedListing = await Listing.findByIdAndDelete(id); //deleting the listing by id
     console.log(deletedListing); //logging the deleted listing to the console
+    req.flash("success", "Successfully deleted the listing!"); // flash message for successful deletion
     res.redirect("/listings"); //redirecting to the listings page after deletion
   })
 );
