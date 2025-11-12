@@ -8,6 +8,9 @@ const ejsMate = require("ejs-mate");
 const ExpressError = require("./utils/ExpressError.js");
 const session = require("express-session");
 const flash = require("connect-flash");
+const passport = require("passport");
+const LocalStrategy = require("passport-local");
+const User = require("./models/user.js");
 
 // Importing route handlers
 const listings = require("./routes/listing.js");
@@ -67,6 +70,15 @@ app.get("/", (req, res) => {
 //we have to use session and flash middleware before using them in routes because they depend on it.
 app.use(session(sessionOptions)); // using session middleware
 app.use(flash()); // using flash middleware
+
+// Passport.js configuration for authentication
+app.use(passport.initialize()); // initializing passport middleware 
+app.use(passport.session()); // using passport session middleware
+passport.use(new LocalStrategy(User.authenticate())); // using local strategy for authentication
+passport.serializeUser(User.serializeUser()); // serialize user into the session
+passport.deserializeUser(User.deserializeUser()); // deserialize user from the session
+
+
 
 // Middleware to make flash messages available in all templates
 app.use((req, res, next) => {
