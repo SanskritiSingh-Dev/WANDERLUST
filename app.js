@@ -76,6 +76,7 @@ app.use(flash()); // using flash middleware
 app.use(passport.initialize()); // initializing passport middleware 
 app.use(passport.session()); // using passport session middleware
 passport.use(new LocalStrategy(userSchema.authenticate())); // using local strategy for authentication
+
 passport.serializeUser(userSchema.serializeUser()); // serialize user into the session
 passport.deserializeUser(userSchema.deserializeUser()); // deserialize user from the session
 
@@ -84,19 +85,9 @@ passport.deserializeUser(userSchema.deserializeUser()); // deserialize user from
 app.use((req, res, next) => {
   res.locals.success = req.flash("success"); // making success flash messages available in all templates
   res.locals.error = req.flash("error"); // making error flash messages available in all templates
+  res.locals.currentUser = req.user; // making the current user available in all templates
   next();
 });
-
-// Route to create a demo user
-// app.get("/demoUser", async (req, res) => {
-//   let fakeuser = new userSchema({ 
-//     email: "fakeusermail@gmail.com",
-//     username: "fakeuser" //it will be added automatically by passport-local-mongoose
-//   });
-//   let regUser = await userSchema.register(fakeuser, "chicken"); // registering user with password
-//   res.send(regUser);
-// });
-
 
 // Using the listings routes for all routes starting with /listings
 app.use("/listings", listingsRouter);
