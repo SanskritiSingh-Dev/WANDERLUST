@@ -35,6 +35,10 @@ router.get(
 // to render a form to create a new listing
 //New Route
 router.get("/new", (req, res) => {
+  if(!req.isAuthenticated()){
+    req.flash("error", "You must be signed in to create a new listing!");
+    return res.redirect("/login");
+  }
   res.render("listings/new.ejs"); // rendering the form to create a new listing
 });
 

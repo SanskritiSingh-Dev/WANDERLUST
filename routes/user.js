@@ -34,9 +34,6 @@ router.post("/login", passport.authenticate("local", { // using local strategy f
     failureRedirect: "/login" // redirect to login page on failure
 }), async(req, res) => {
      req.flash("success", "Welcome back to YaatriStay!");
-    const redirectUrl = req.session.returnTo || "/listings"; // redirect to the original URL or listings page
-    delete req.session.returnTo;
-    res.redirect(redirectUrl);
 });
 
 router.get("/logout", (req, res) => {
