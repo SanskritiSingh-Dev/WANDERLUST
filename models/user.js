@@ -14,5 +14,5 @@ const userSchema = new Schema({
     }
 });
 
-User.plugin(passportLocalMongoose); // Integrate Passport-Local-Mongoose to handle username and password
+userSchema.plugin(passportLocalMongoose); // Integrate Passport-Local-Mongoose to handle username and password
 module.exports = mongoose.model('User', userSchema);

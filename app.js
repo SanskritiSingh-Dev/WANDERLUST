@@ -10,11 +10,12 @@ const session = require("express-session");
 const flash = require("connect-flash");
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
-const User = require("./models/user.js");
+const userSchema = require("./models/user.js");
 
 // Importing route handlers
-const listings = require("./routes/listing.js");
-const reviews = require("./routes/review.js");
+const listingsRouter = require("./routes/listing.js");
+const reviewsRouter = require("./routes/review.js");
+const userRouter = require("./routes/user.js");
 
 // Setting up EJS as the templating engine with ejs-mate for layouts
 app.engine("ejs", ejsMate);
@@ -74,10 +75,9 @@ app.use(flash()); // using flash middleware
 // Passport.js configuration for authentication
 app.use(passport.initialize()); // initializing passport middleware 
 app.use(passport.session()); // using passport session middleware
-passport.use(new LocalStrategy(User.authenticate())); // using local strategy for authentication
-passport.serializeUser(User.serializeUser()); // serialize user into the session
-passport.deserializeUser(User.deserializeUser()); // deserialize user from the session
-
+passport.use(new LocalStrategy(userSchema.authenticate())); // using local strategy for authentication
+passport.serializeUser(userSchema.serializeUser()); // serialize user into the session
+passport.deserializeUser(userSchema.deserializeUser()); // deserialize user from the session
 
 
 // Middleware to make flash messages available in all templates
@@ -87,12 +87,25 @@ app.use((req, res, next) => {
   next();
 });
 
+// Route to create a demo user
+// app.get("/demoUser", async (req, res) => {
+//   let fakeuser = new userSchema({ 
+//     email: "fakeusermail@gmail.com",
+//     username: "fakeuser" //it will be added automatically by passport-local-mongoose
+//   });
+//   let regUser = await userSchema.register(fakeuser, "chicken"); // registering user with password
+//   res.send(regUser);
+// });
+
 
 // Using the listings routes for all routes starting with /listings
-app.use("/listings", listings);
+app.use("/listings", listingsRouter);
 
 // Using the reviews routes for all routes starting with /listings/:id/reviews
-app.use("/listings/:id/reviews", reviews);
+app.use("/listings/:id/reviews", reviewsRouter);
+
+// Using the user routes for all routes starting with /users
+app.use("/", userRouter);
 
 // if the developer went to a route that does not exist, Catch-all route for handling 404 errors
 app.use((req, res, next) => {
