@@ -37,12 +37,12 @@ router.post("/login", passport.authenticate("local", { // using local strategy f
 });
 
 router.get("/logout", (req, res) => {
-    req.logout((err) => {
-        if(err){
-            return next(err);
+    req.logout((err) => { // logout user
+        if(err){// handle error during logout
+            return next(err); // pass error to the next middleware
         }
-        req.flash("success", "Logged you out!");
-        res.redirect("/listings");
+        req.flash("success", "Logged you out!"); // flash success message
+        res.redirect("/listings"); 
     });
 });
 

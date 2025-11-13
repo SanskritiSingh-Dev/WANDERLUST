@@ -9,6 +9,7 @@ const wrapAsync = require("../utils/wrapAsync.js");
 const { listingSchema } = require("../schema.js");
 const ExpressError = require("../utils/ExpressError.js");
 const Listing = require("../models/listing");
+const { isLoggedIn } = require("../middleware.js");
 
 // Middleware function to validate listing data using Joi schema
 const validateListing = (req, res, next) => {
@@ -34,11 +35,7 @@ router.get(
 
 // to render a form to create a new listing
 //New Route
-router.get("/new", (req, res) => {
-  if(!req.isAuthenticated()){
-    req.flash("error", "You must be signed in to create a new listing!");
-    return res.redirect("/login");
-  }
+router.get("/new", isLoggedIn, (req, res) => {
   res.render("listings/new.ejs"); // rendering the form to create a new listing
 });
 
@@ -46,6 +43,7 @@ router.get("/new", (req, res) => {
 //Show route
 router.get(
   "/:id",
+  isLoggedIn,
   wrapAsync(async (req, res) => {
     const { id } = req.params; // destructuring id from req.params
     const listing = await Listing.findById(id).populate("reviews"); // fetching the listing by id and populating the reviews
@@ -61,6 +59,7 @@ router.get(
 //Create Route
 router.post(
   "/",
+  isLoggedIn,
   validateListing,
   wrapAsync(async (req, res, next) => {
     const newListing = new Listing(req.body.listing); // creating a new listing using the data from the request body
@@ -74,6 +73,7 @@ router.post(
 //Edit Route
 router.get(
   "/:id/edit",
+  isLoggedIn,
   wrapAsync(async (req, res) => {
     const { id } = req.params; //destructuring id from req.params
     const listing = await Listing.findById(id);
@@ -89,6 +89,7 @@ router.get(
 //Update Route
 router.put(
   "/:id",
+  isLoggedIn,
   validateListing,
   wrapAsync(async (req, res) => {
     const { id } = req.params;
